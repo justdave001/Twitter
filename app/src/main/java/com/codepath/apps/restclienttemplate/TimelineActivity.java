@@ -71,8 +71,9 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
        if (item.getItemId()==R.id.compose_tweet){
            //tweet icon is clicked and we'll navigate to compose screen/actvty
-           Toast.makeText(this,"Tweet", Toast.LENGTH_SHORT).show();
-           //navigate to tweet screen
+
+           Intent i = new Intent(this, ComposeActivity.class);
+           startActivity(i);
            return true;
        }
         return super.onOptionsItemSelected(item);
