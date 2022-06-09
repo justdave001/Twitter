@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import java.util.List;
 import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
-
+    private SwipeRefreshLayout swipeContainer;
     private static final int REQUEST_CODE=20;
 
     TwitterClient client;
@@ -43,6 +44,18 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchTimelineAsync();
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         client = TwitterApp.getRestClient(this);
         logout = (Button) findViewById(R.id.logout);
@@ -64,6 +77,24 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setAdapter(adapter);
         populateHomeTimeline();
     }
+   List<Tweet> tweetss;
+    private void fetchTimelineAsync() {
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                adapter.clear();
+                adapter.Add(tweetss);
+                swipeContainer.setRefreshing(false);
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,14 +105,14 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-       if (item.getItemId()==R.id.compose_tweet){
-           //tweet icon is clicked and we'll navigate to compose screen/actvty
+        if (item.getItemId()==R.id.compose_tweet){
+            //tweet icon is clicked and we'll navigate to compose screen/actvty
 
-           Intent i = new Intent(this, ComposeActivity.class);
-           startActivityForResult(i,REQUEST_CODE);
+            Intent i = new Intent(this, ComposeActivity.class);
+            startActivityForResult(i,REQUEST_CODE);
 
-           return true;
-       }
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -91,13 +122,13 @@ public class TimelineActivity extends AppCompatActivity {
             //getting data from tweet
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
             //updating recyclerview/ timeline
-                //modify data source of tweet
+            //modify data source of tweet
             tweets.add(0,tweet);
 
-                //update adapter
-               adapter.notifyItemInserted(0);
+            //update adapter
+            adapter.notifyItemInserted(0);
 
-               rvTweets.smoothScrollToPosition(0);
+            rvTweets.smoothScrollToPosition(0);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

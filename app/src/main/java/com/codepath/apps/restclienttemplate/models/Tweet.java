@@ -12,6 +12,7 @@ public class Tweet {
     public  String body;
     public  String CreatedAt;
     public User user;
+    public String imageUrl;
    //empty constructor needed by parceler library
     public Tweet(){
 
@@ -22,6 +23,20 @@ public class Tweet {
             tweet.body = jsonObject.getString("text");
             tweet.CreatedAt = jsonObject.getString("created_at");
             tweet.user= User.fromJson(jsonObject.getJSONObject("user"));
+
+            if(!jsonObject.isNull("extended_entities")){
+                JSONObject extendedEntities = jsonObject.getJSONObject("extended_entities");
+                JSONArray media = extendedEntities.getJSONArray("media");
+                JSONObject mediaObject = media.getJSONObject(0);
+                tweet.imageUrl = mediaObject.getString("media_url_https");
+
+
+
+            }
+            else{
+                tweet.imageUrl = "";
+
+            }
 
             return tweet;
 

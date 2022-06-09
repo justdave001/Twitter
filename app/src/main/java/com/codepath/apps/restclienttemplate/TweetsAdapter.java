@@ -1,3 +1,5 @@
+
+
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
@@ -20,7 +22,15 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     List<Tweet> tweets;
     //pass context and list of tweets
 
+    public void clear(){
+        tweets.clear();
+        notifyDataSetChanged();
+    }
 
+    public void Add(List<Tweet> list){
+        tweets.addAll(list);
+        notifyDataSetChanged();
+    }
     public TweetsAdapter(Context context, List<Tweet> tweets) {
         this.context = context;
         this.tweets = tweets;
@@ -53,11 +63,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView profileImage;
         TextView  tvBody;
         TextView  tvScreeName;
+        ImageView ivMediaImage;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             profileImage = itemView.findViewById(R.id.profileImage);
             tvBody       = itemView.findViewById(R.id.tvBody);
             tvScreeName       = itemView.findViewById(R.id.tvScreeName);
+            ivMediaImage = itemView.findViewById(R.id.ivMediaImage);
         }
 
 
@@ -65,6 +78,15 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvScreeName.setText(tweet.user.screeName);
             Glide.with(context).load(tweet.user.profileImageUrl).into(profileImage);
+
+            if(!tweet.imageUrl.equals("")){
+                Glide.with(context).load(tweet.imageUrl).into(ivMediaImage);
+            }
+            else{
+                ivMediaImage.setVisibility(View.GONE);
+            }
+
+
         }
     }
 }

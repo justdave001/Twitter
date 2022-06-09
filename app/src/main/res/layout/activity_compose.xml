@@ -9,34 +9,39 @@
     tools:context=".ComposeActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="376dp"
+        android:layout_height="553dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         app:counterEnabled="true"
         app:counterMaxLength="280">
 
         <EditText
+
             android:id="@+id/Compose"
-            android:layout_width="382dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="147dp"
+            android:layout_width="387dp"
+            android:layout_height="210dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/what_s_popping"
             android:inputType="textMultiLine"
             android:minLines="6" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/tweet_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Compose"
+
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="7dp"
         android:text="@string/tweet" />
 
 </RelativeLayout>
