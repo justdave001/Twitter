@@ -20,6 +20,7 @@ import java.util.List;
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
     List<Tweet> tweets;
+
     //pass context and list of tweets
 
     public void clear(){
@@ -64,6 +65,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView  tvBody;
         TextView  tvScreeName;
         ImageView ivMediaImage;
+        TextView tvTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,15 +73,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody       = itemView.findViewById(R.id.tvBody);
             tvScreeName       = itemView.findViewById(R.id.tvScreeName);
             ivMediaImage = itemView.findViewById(R.id.ivMediaImage);
+            tvTime = itemView.findViewById(R.id.tvTime);
         }
 
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreeName.setText(tweet.user.screeName);
+            tvTime.setText(tweet.timeStamp);
             Glide.with(context).load(tweet.user.profileImageUrl).into(profileImage);
 
             if(!tweet.imageUrl.equals("")){
+                ivMediaImage.setVisibility(View.VISIBLE);
                 Glide.with(context).load(tweet.imageUrl).into(ivMediaImage);
             }
             else{

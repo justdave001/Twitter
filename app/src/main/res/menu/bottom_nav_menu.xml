@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+
+        android:id="@+id/home"
+        android:tint="@android:color/white"
+        android:title="home"
+        android:icon="@drawable/ic_vector_home_stroke"
+        app:labelVisibilityMode="unlabeled"/>
+    <item
+        android:id="@+id/search"
+        android:tint="@android:color/white"
+
+        android:title="search"
+        android:icon="@drawable/ic_vector_search"/>
+    <item
+        android:id="@+id/notifications"
+        android:tint="@android:color/white"
+
+        android:title="notifications"
+        android:icon="@drawable/ic_vector_notifications_stroke"/>
+
+    <item
+        android:id="@+id/messages"
+        android:title="messages"
+        android:icon="@drawable/vector_messages"/>
+
+</menu>

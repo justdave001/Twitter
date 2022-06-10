@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,8 @@ public class TimelineActivity extends AppCompatActivity {
 
 
     private Button logout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +61,7 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
 
         client = TwitterApp.getRestClient(this);
-        logout = (Button) findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openLogin();
-            }
-        });
+
         //find recyclerview
         rvTweets = findViewById(R.id.rvTweets);
 
@@ -101,6 +98,8 @@ public class TimelineActivity extends AppCompatActivity {
         //adds value to menu bar if menu is present
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
+        // Inflate the menu items for use in the action bar
     }
 
     @Override
@@ -112,6 +111,9 @@ public class TimelineActivity extends AppCompatActivity {
             startActivityForResult(i,REQUEST_CODE);
 
             return true;
+        }
+        if(item.getItemId() == R.id.activity_login){
+            openLogin();
         }
         return super.onOptionsItemSelected(item);
     }
